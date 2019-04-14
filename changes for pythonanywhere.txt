@@ -1,0 +1,13 @@
+Web > Code > Source code: /home/jplusplus/<repo>/server
+Don't have to change 'Working directory' or 'WSGI configuration file' (or Python version, I don't think)
+Don't think you have to change Virtualenv
+Don't have to change the wsgi config file
+
+Web > Static files > /home/jplusplus/<repo>/client (I think)
+
+Files > 
+	index.html: get rid of %PUBLIC_URL%/ before favicon
+	home blueprint needs
+		templateFolder = 'N2TApp/client/public'
+
+		staticFolder = 'N2TApp/client'  
