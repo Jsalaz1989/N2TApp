@@ -39,7 +39,6 @@ const RegisterForm = ({ history }) => {
             passwordCheck={true}
             onSubmit={registerUser}
             submitButtonText='Register'
-            image='register.png'
         />
     )
 }

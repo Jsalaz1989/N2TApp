@@ -14,7 +14,6 @@ const ResetConf = ({ history }) => {
             textAfter={'Click below to sign in as ' + email}
             onSubmit={() => history.push('/login?email='+email)}
             submitButtonText='Log In'
-            image='login.png'
             nextAfterDone={true}
             isInitialValid={true}
         />

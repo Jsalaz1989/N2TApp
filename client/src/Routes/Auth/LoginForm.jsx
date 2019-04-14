@@ -1,11 +1,10 @@
 import React from 'react'
 import BaseAuthForm from './BaseAuthForm';
 import { fetchPost } from '../../helpers/fetch'
-import Button from '@material-ui/core/Button'
 
 
-const LoginForm = ({ history }) => {
-  
+const LoginForm = ({ history, setIsAuthenticated }) => {
+ 
     function logInUser(values, actions) {
 
 		console.log('Logging in user: ', values)
@@ -17,7 +16,10 @@ const LoginForm = ({ history }) => {
             if (data.userLoggedIn)
             {
                 console.log('Correct password')
+                setIsAuthenticated(true)
+                localStorage.setItem('authenticated', true)
                 history.push('/home')
+                window.location.reload();
             }
             else 
             {
@@ -28,21 +30,6 @@ const LoginForm = ({ history }) => {
 
         fetchPost('/logInUser', values, handleResponse)
     }
-
-	const ResetButton = (props) => {
-		return (
-			<Button
-				style={{fontSize: '10px'}}
-				size='small'
-				variant="contained"
-				color="secondary"
-				disabled={false}
-				onClick={()=> history.push('/reset?email='+props.values.email)}
-			>
-				Reset password?
-			</Button>
-		)
-	}
     
     return (
         <BaseAuthForm 
@@ -56,8 +43,7 @@ const LoginForm = ({ history }) => {
             passwordCheck={false}
             onSubmit={logInUser}
             submitButtonText='Log In'
-            image='login.png'
-            alternateButton={ResetButton}
+            alternateButton={true}
         />
     )
 }

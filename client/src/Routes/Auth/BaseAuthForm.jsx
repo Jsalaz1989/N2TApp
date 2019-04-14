@@ -24,9 +24,7 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
-import Fingerprint from '@material-ui/icons/Fingerprint' 
-
-import Tooltip from '@material-ui/core/Tooltip';
+import Tooltip from '@material-ui/core/Tooltip'
 
 
 
@@ -46,22 +44,6 @@ const BaseAuthForm =  (props) => {
 	function clearTimeouts(timeoutsArray) {
 		for (let i = 0; i < timeoutsArray.length; i++)
 			clearTimeout(timeoutsArray[i])
-	}
-
-	const Checkmark = () => {
-
-		const style = {
-			content: 'url("https://www.freeiconspng.com/uploads/checkmark-symbol-png-background-12.png")',
-			maxWidth: '7%',
-			height: 'auto',
-		}
-
-		return <img style={style} alt='Not Found'/>
-	}
-
-	const AlternateButton = (props) => {
-		const AltButton = props.alternateButton
-		return <AltButton {...props} />
 	}
 
 	const Fields = ( props ) => {
@@ -157,7 +139,7 @@ const BaseAuthForm =  (props) => {
 		)
 	}
 
-	const Submit = (props) => {
+	const Submit = ( props ) => {
 
 		const ProgressProps = {
 			color: 'secondary',
@@ -193,71 +175,43 @@ const BaseAuthForm =  (props) => {
 		fullWidth: true,
 		maxWidth: 'xs',
 		onBackdropClick: () => {clearTimeouts(timeouts); props.history.push('/')},
-		// PaperProps: {
-		// 	style: {
-		// 		// backgroundColor: 'rgba(0, 0, 0)',
-		// 		// backgroundImage: 'url(../public/images/'+props.image+')', 
-		// 		backgroundRepeat: 'no-repeat',
-		// 		backgroundPosition: 'right top',
-		// 		backgroundSize: props.done ? '100px 100px' : '200px 200px',
-		// 		backgroundBlendMode: 'overlay',
-		// 	},
-		// },
 	}
 
 	const DialogContentTextProps = {
 		variant: 'body2',
 	}
 
-	const GridContainerProps = {
-		spacing: 16,
-		alignItems: 'center',
-		justify: 'space-around'
-	}
-
 	function focusNext(values) {
-
-		console.log('values = ', values)
-
 		if (values.email === '')
-		{
-			console.log('focusing on email')
 			setFocusField('email')
-		}
 		else if (values.password === '')
 			setFocusField('password')
 	}
 
-	console.log('focusField = ', focusField)
-
 	return (
 		<Dialog {...DialogProps}>	
-		{/* <Grid container {...GridContainerProps}>
-			<Grid item><DialogTitle>{props.done ? props.titleAfter : props.titleBefore}</DialogTitle></Grid>
-			<Grid item><Fingerprint /></Grid>
-		</Grid> */}
-		<DialogTitle>{props.done ? props.titleAfter : props.titleBefore}</DialogTitle>
-		<DialogContent>
-			<DialogContentText {...DialogContentTextProps}>{props.done ? props.textAfter : props.textBefore}</DialogContentText>
-			<br />
-			<Formik
-				initialValues={{
-					email: window.location.search.replace('?email=',''),
-					password: '',
-				}}
-				isInitialValid={props.isInitialValid}
-				onSubmit={(values, actions) => {clearTimeouts(timeouts); props.onSubmit(values, actions)}}
-				render={formikProps => 							
-					<Form onBlur={() => focusNext(formikProps.values)}>
-						{!props.done && <Fields {...props} {...formikProps}/>}
-						<br />
-						{(!props.done || props.nextAfterDone) && <Submit {...props} {...formikProps}/> }
-					</Form>
-				}
-			>
-			</Formik>
-		</DialogContent>
-	</Dialog>
+			<DialogTitle>{props.done ? props.titleAfter : props.titleBefore}</DialogTitle>
+			<DialogContent>
+				<DialogContentText {...DialogContentTextProps}>{props.done ? props.textAfter : props.textBefore}</DialogContentText>
+				<br />
+				<Formik
+					initialValues={{
+						email: window.location.search.replace('?email=',''),
+						password: '',
+					}}
+					isInitialValid={props.isInitialValid}
+					onSubmit={(values, actions) => {clearTimeouts(timeouts); props.onSubmit(values, actions)}}
+					render={formikProps => 							
+						<Form onBlur={() => focusNext(formikProps.values)}>
+							{!props.done && <Fields {...props} {...formikProps}/>}
+							<br />
+							{(!props.done || props.nextAfterDone) && <Submit {...props} {...formikProps}/> }
+						</Form>
+					}
+				>
+				</Formik>
+			</DialogContent>
+		</Dialog>
 	)
 }
 

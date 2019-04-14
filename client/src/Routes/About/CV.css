@@ -1,0 +1,4 @@
+.noScrollBars {
+    scrollbar-width: none;      /* Firefox */
+    -ms-overflow-style: none;   /* IE 10+ */ /* Doesn't seem to need it */
+}

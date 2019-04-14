@@ -105,6 +105,10 @@ def logInUser():
 	user = User.query.filter_by(email=email).first()
 	print("user = ", user)
 
+	if not user.active:
+		print('User not activated')
+		return jsonify(userLoggedIn=False)
+
 	if not verify_password(password, user.password):
 		print('Incorrect password')
 		return jsonify(userLoggedIn=False)

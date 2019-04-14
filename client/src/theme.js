@@ -39,7 +39,10 @@ const theme = createMuiTheme({
         },
         MuiAppBar: {
             colorPrimary: {
-                backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+                position: 'static',
+                minHeight: '15vh',
+                boxShadow: 'none',
             },
         },
         MuiDialog: {
@@ -55,15 +58,35 @@ const theme = createMuiTheme({
         MuiDialogTitle: {
             root: {
                 textAlign: 'center',
+                color: '#b596c5',
+                zIndex: 999,
             },
         },
-        MuiIconButton: {
-            // root: {
-            //     '&:hover': {
-            //         backgroundColor: "$labelcolor"
-            //     }
-            // },
+        MuiDrawer: {
+            root: {
+                position: 'static',
+            },
+            paper: {
+                // width: 240,
+                marginTop: 80,
+            },
         },
+        MuiListItemIcon: {
+            root: {
+                top: '0',
+                position: 'static',
+            },
+        },
+        MuiButton: {
+            root: {
+                color: '#b596c5',
+            }
+        }
+        // MuiDivider: {
+        //     root: {
+        //       marginTop: 1,
+        //     },
+        // },
     },
 });
 

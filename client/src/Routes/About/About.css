@@ -1,0 +1,311 @@
+.avatar {
+    animation-name: 
+        fadeInSlow,
+        growAndShrink;
+    animation-duration: 2s;
+} 
+
+@keyframes fadeInSlow {
+    0% { opacity: 0; }
+    95% { opacity: 0.95; }
+    100% { opacity: 1; }
+}
+
+@-webkit-keyframes growAndShrink {
+    0% { -webkit-transform: scale(1); }
+    80% { -webkit-transform: scale(1.3); }
+    90% { -webkit-transform: scale(0.9); }
+    100% { -webkit-transform: scale(1); }
+}
+
+.revealCursive {
+    overflow: hidden;               /* Ensures the content is not revealed until the animation */
+    white-space: wrap;              /* Keeps the content on a single line */
+    
+    animation-name: reveal;
+    -webkit-animation-name: reveal;
+
+    animation-duration: 5s;
+    -webkit-animation-duration: 5s;
+
+    animation-timing-function: steps(30, end);
+    -webkit-animation-timing-function: steps(30, end);
+
+
+    max-width: max-content;         /* Needed on Chrome and FireFox to hide "of" while typing "Master" */
+}
+
+@keyframes reveal {
+    0% { width: 0 }
+    50% { width: 0 }
+    100% { width: 100% }
+}
+
+.revealO {
+    animation-name: fadeIn;
+    animation-duration: 4s;
+    animation-fill-mode: forwards; 
+    visibility: hidden;
+}
+
+
+.revealF {
+    animation-name: fadeIn;
+    animation-duration: 4.35s;
+    animation-fill-mode: forwards; 
+    visibility: hidden;
+}
+
+
+/* Stamping doesn't work super well in Edge */
+#stampContainer {
+    align-items: center;
+    display: flex;
+    width: 270px;
+    position: relative;
+
+}
+
+#stamp, #stampPrint {
+    width: 100%;
+    position: absolute;
+}
+
+#stampPrint {
+    animation-name: getStamped;
+    -webkit-animation-name: getStamped;
+
+    animation-duration: 3s;
+    -webkit-animation-duration: 3s;
+
+    animation-fill-mode: forwards; 
+    -webkit-animation-fill-mode: forwards;
+
+    animation-delay: 6.3s;
+    -webkit-animation-delay: 6s;
+
+    opacity: 0;
+}
+
+@keyframes getStamped {
+/* @-webkit-keyframes getStamped { */       /* keyframes type doesn't seem to matter */
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.50;
+        color: #b596c5;
+    }
+    30% {
+        opacity: 1;
+        color: #b596c5;
+    }
+    60% {
+        opacity: 1;
+        color: white;
+    }
+    100% {
+        opacity: 1;
+        color: white;
+    }
+}
+#stamp {
+    z-index: 10;
+}
+
+.stamp {
+    animation-name: stamping;
+    -webkit-animation-name: stamping;
+
+    animation-delay: 6s;
+    -webkit-animation-delay: 6s;
+
+    animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+
+    animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+
+    opacity: 0;
+}
+
+@keyframes stamping {
+/* @-webkit-keyframes stamping { */         /* keyframes type doesn't seem to matter */
+    0% {
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.50;
+        color: #b596c5;
+        border-style: solid;
+        border-radius: 10%;
+        border-width: 4px;
+        border-color: #b596c5;
+        transform-origin: 50% 50%;
+        transform: rotate(-2deg) scale(3.5);
+        transition: all .3s cubic-bezier(0.6, 0.04, 0.7, 0.5);
+    }
+    30% {
+        opacity: 1;
+        color: #b596c5;
+        border-style: solid;
+        border-radius: 10%;
+        border-width: 4px;
+        border-color: #b596c5;
+        transform: rotate(-10deg) scale(1);
+    }
+    65% {
+        opacity: 1;
+        color: #b596c5;
+        border-style: solid;
+        border-radius: 10%;
+        border-width: 4px;
+        border-color: #b596c5;
+        transform: rotate(5deg) scale(1.3);
+    }
+    100% {
+        opacity: 0;
+        transform: rotate(0deg) scale(1);
+        color: white;
+        border-color: #b596c5;
+        border-style: none;
+    }
+}
+
+.avatarContainer {
+    animation-name: moveUpAvatar;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    animation-delay: 7.5s;
+}
+
+@keyframes moveUpAvatar {
+    50% { transform: translateY(0px); }
+    100% { transform: translateY(-90px); }
+}
+
+.title {
+    animation-name: moveUpLeftTitle;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    animation-delay: 7.5s;
+}
+
+@keyframes moveUpLeftTitle {
+    50% { transform: translateX(0px) translateY(0px); }
+    100% { transform: translateX(-340px) translateY(-180px); }
+}
+
+.subtitle {
+    animation-name: moveUpLeftSubtitle;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    animation-delay: 7.5s;
+}
+
+@keyframes moveUpLeftSubtitle {
+    50% { transform: translateX(0px) translateY(0px) scale(1); }
+    100% { transform: translateX(-300px) translateY(-200px) scale(0.75); }
+}
+
+.cv {
+    animation: 10s fadeIn;
+    animation-fill-mode: forwards; 
+    visibility: hidden;
+}
+
+.linkedIn {
+    animation: 11s fadeIn;
+    animation-fill-mode: forwards; 
+    visibility: hidden;
+}
+
+.email {
+    animation: 12s fadeIn;
+    animation-fill-mode: forwards; 
+    visibility: hidden;
+}
+
+.content {
+    overflow: hidden;           
+    white-space: wrap; 
+    animation-name: revealDownwards;
+    animation-duration: 14s;
+    animation-timing-function: steps(30, end);
+    max-width: 82%;
+}
+
+@keyframes revealDownwards {
+    0% { height: 0; }
+    90% { height: 0 }
+    100% { height: 100% }
+}
+
+.tilesContainer {
+    overflow: scroll;
+    display: flex;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 10px;
+    padding-bottom: 160px;
+    width: 85%;
+    position: relative;
+    left: 50px;
+    top: 100px;
+    animation: 13.5s fadeIn;
+    animation-fill-mode: forwards; 
+    visibility: hidden;
+
+
+    /* Hide tiles scrollbar */
+    scrollbar-width: none;      /* Firefox */
+    -ms-overflow-style: none;   /* IE 10+ */
+
+}
+
+/* Hide general scrollbar */
+html {
+    scrollbar-width: none;          /* Firefox */
+    -ms-overflow-style: none;       /* IE 10+ */
+}
+
+/* Hide a;; scrollbars in Chrome and Mac (?) */
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+.tile {
+    position: relative;
+    overflow: visible;
+    /* display: inline-block; */
+    top:-10px;
+    left:-5px;
+}
+
+.foot {
+    animation: 16s fadeIn;
+    animation-fill-mode: forwards; 
+    visibility: hidden;
+    padding-bottom: 30px;
+
+    /* Hack to make footer stretch down to bottom of html */
+    position: relative;     
+    top: 90px;
+}
+
+
+@keyframes fadeIn {
+    99% { visibility: hidden; }
+    100% { visibility: visible; }
+}
+
+/* Avoid html from peaking under the footer */
+html {
+    background-color: #2a2a2a; 
+    display: flex; 
+    flex-direction: column;
+}
+

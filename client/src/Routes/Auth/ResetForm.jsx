@@ -39,7 +39,6 @@ const ResetForm = ({ history }) => {
             passwordCheck={true}
             onSubmit={resetPassword}
             submitButtonText='Send confirmation email'
-            image='login.png'
         />
     )
 }

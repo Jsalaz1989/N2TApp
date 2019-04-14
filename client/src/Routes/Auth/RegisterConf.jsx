@@ -14,7 +14,6 @@ const RegisterConf = ({ history }) => {
             textAfter={'Click below to sign in as ' + email}
             onSubmit={() => history.push('/login?email='+email)}
             submitButtonText='Log In'
-            image='register.png'
             nextAfterDone={true}
             isInitialValid={true}
         />
