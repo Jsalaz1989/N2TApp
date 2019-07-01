@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import BaseAuthForm from './BaseAuthForm';
-import { fetchPost } from '../../helpers/fetch'
 
 
 const LogoutForm = ({ history }) => {

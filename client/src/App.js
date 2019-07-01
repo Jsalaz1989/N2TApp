@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Route, Switch, NavLink, Redirect } from 'react-router-dom'
+import React, { useState } from 'react'
+import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-dom'
 
 import About from './Routes/About/About'
 import LandingPage from './Routes/LandingPage'
@@ -11,7 +11,7 @@ import ResetForm from './Routes/Auth/ResetForm'
 import ResetConf from './Routes/Auth/ResetConf'
 import PrivateRoute from './Routes/PrivateRoute'
 import Home from './Routes/Home'
-import Build from './Routes/Build'
+import Build from './Routes/Build/Build'
 import CV from './Routes/About/CV'
 
 
@@ -30,8 +30,6 @@ import CloseIcon from '@material-ui/icons/Close'
 import HomeIcon from '@material-ui/icons/Home'
 
 
-import theme from './theme'
-
 import Typography from '@material-ui/core/Typography'
 
 
@@ -42,8 +40,10 @@ const App = () => {
 
     const styles = {
         div: {
-            backgroundColor: theme.palette.primary.main,
-            minHeight: '100vh',
+            // backgroundColor: theme.palette.primary.main,
+			// minHeight: '100vh',
+			// display: 'flex',
+			// bottom: 0,
 		},
 	}
 
@@ -125,9 +125,8 @@ const App = () => {
 	}
 
 	return (    
-		<Router>
-			{/* <ScrollToTop> */}
-            <div style={styles.div}>
+		<Router style={styles.div}>
+            {/* <div> */}
                 <AppBarSmart />
                 <Switch>
 					<Route exact path='/' component={!isAuthenticated ? LandingPage : Home} />
@@ -143,8 +142,7 @@ const App = () => {
 					<PrivateRoute path='/logout' component={LogoutForm} isAuthenticated={isAuthenticated}/>
                 </Switch>
 				<Typography color='textSecondary' align='center' className='foot'>j++ &copy; 2019</Typography>
-            </div>
-			{/* </ScrollToTop> */}
+            {/* </div> */}
         </Router>
     )
 }

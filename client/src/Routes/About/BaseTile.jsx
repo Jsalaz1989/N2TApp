@@ -7,13 +7,9 @@ import DialogContentText from '@material-ui/core/DialogContentText'
 
 import Grid from '@material-ui/core/Grid'
 
-import Typography from '@material-ui/core/Typography'
 import Carousel from './Carousel';
 
 
-import styled from "styled-components"
-
-import theme from '../../theme'
 
 import './BaseTile.css'
 
@@ -22,7 +18,7 @@ const BaseTile = ({ src, title, subtitle, dialogContent, slides }) => {
 	const [expanded, setExpanded] = useState(false)
 
     let duration = '450ms'
-    let tileWidth = 'auto'
+    // let tileWidth = 'auto'
     let tileHeight = '300px'
 
 

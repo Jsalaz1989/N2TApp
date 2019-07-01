@@ -14,15 +14,15 @@ const theme = createMuiTheme({
 			light: '#b596c5',
             main: '#2a2a2a',
             // main: '#3a3a3a',
-			dark: '#000000',
+			dark: '#424242',
 			contrastText: '#ffffff',
 		},
-		// secondary: {
-		// 	light: '#ffcccb',
-		// 	main: '#ef9a9a',
-		// 	dark: '#ba6b6c',
-		// 	contrastText: '#000000',
-        // },
+		secondary: {
+			light: '#ffcccb',
+			main: '#b596c5',
+			dark: '#ba6b6c',
+			contrastText: '#000000',
+        },
     },
     overrides: {
         MuiTab: { 
@@ -43,13 +43,14 @@ const theme = createMuiTheme({
                 position: 'static',
                 minHeight: '15vh',
                 boxShadow: 'none',
+                zIndex: 9999,
             },
         },
         MuiDialog: {
             paper: {
                 width: '500px',
                 opacity: '0.9',
-                backgroundColor: 'black',
+                backgroundColor: '#2a2a2a',
                 color: 'white'
                 // fullWidth: 'true',
                 // maxWidth: 'sm',
@@ -64,11 +65,19 @@ const theme = createMuiTheme({
         },
         MuiDrawer: {
             root: {
-                position: 'static',
+                position: 'absolute',
+
             },
             paper: {
-                // width: 240,
-                marginTop: 80,
+                width: 240,
+                // marginTop: 85, //85
+                // paddingTop: 85,
+                // position: 'absolute',
+                paddingBottom: 100,
+                // top: '10',
+                top: '85px',
+
+
             },
         },
         MuiListItemIcon: {

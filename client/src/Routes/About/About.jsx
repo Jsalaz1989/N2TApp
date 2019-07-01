@@ -1,20 +1,10 @@
 import React from 'react'
 
-import Grid from '@material-ui/core/Grid'
-
-
 import Typography from '@material-ui/core/Typography'
 
 import theme from '../../theme'
 
-import { NavLink } from 'react-router-dom'
-
 import Button from '@material-ui/core/Button'
-
-import Divider from '@material-ui/core/Divider';
-
-
-import styled from "styled-components"
 
 import Tooltip from '@material-ui/core/Tooltip'
 
@@ -30,10 +20,7 @@ import DobotTile from './DobotTile'
 
 const About = ({ history }) => {
 
-
-
-
-    let leftJustify = '100px'
+    // let leftJustify = '100px'
 
 
     const styles = {
@@ -116,25 +103,25 @@ const About = ({ history }) => {
 
     let myImage = '../../public/images/me.jpg'
         
-    const NavButton = ({ to, text }) => {
-        return <Button to={to}>{text}</Button>;
-    }
+    // const NavButton = ({ to, text }) => {
+    //     return <Button to={to}>{text}</Button>;
+    // }
 
-    const MyButton = styled(Button)`
-        && {
-            padding-right: 0;
-            padding-left: 0;
-            max-width: 5px;
+    // const MyButton = styled(Button)`
+    //     && {
+    //         padding-right: 0;
+    //         padding-left: 0;
+    //         max-width: 5px;
 
-            // text-align: right;
+    //         // text-align: right;
 
-            & .label {
-                margin-right: 0;
-                padding-right: 0;
-                padding-left: 0;
-                text-align: right;
-        }
-    `;
+    //         & .label {
+    //             margin-right: 0;
+    //             padding-right: 0;
+    //             padding-left: 0;
+    //             text-align: right;
+    //     }
+    // `;
 
     // document.getElementById("myDIV").style.display = "none";
 
@@ -175,7 +162,7 @@ const About = ({ history }) => {
          <div>
             <div style={styles.header}>
                 <span className='avatarContainer'>
-                    <img className='avatar' style={styles.avatar} src={myImage} alt='Image not found' />
+                    <img className='avatar' style={styles.avatar} src={myImage} alt='Not Found' />
                 </span>
                 <p className='title' style={styles.headerTitle}>Jaime Salazar Lahera</p>                   
                 <div className='subtitle' style={styles.headerSubtitle}>
@@ -217,25 +204,25 @@ const About = ({ history }) => {
 			</div>
             <div className='content' style={styles.body}>
                 <Typography paragraph>
-                    Despite the tongue-in-cheek introduction, I <i>did</i> recently graduate from a '<span style={styles.highlight}>Máster en Ingeniería Electromecánica</span>' 
+                    Despite the tongue-in-cheek introduction, I <i>did</i> recently graduate from a '<span className='glow' style={styles.highlight}>Máster en Ingeniería Electromecánica</span>' 
                     from UPM, here in Madrid, and I am now looking for work in the city.
                     <br />
-                    I'm interested in <span style={styles.highlight}>programming, robotics, automation (particularly RPA), solar energy, and 
+                    I'm interested in <span className='glow' style={styles.highlight}>programming, robotics, automation (particularly RPA), solar energy, and 
                     the environment</span>.
                 </Typography>
                 <br />
                 <Typography paragraph>
-                    I claim to be a somewhat capable user of <span style={styles.highlight}>Python, C, and JavaScript</span>, and I can find my way 
-                    around <span style={styles.highlight}>shell and Office scripts</span>, as well as <span style={styles.highlight}>UiPath</span> and general automation. 
+                    I claim to be a somewhat capable user of <span className='glow' style={styles.highlight}>Python, C, and JavaScript</span>, and I can find my way 
+                    around <span className='glow' style={styles.highlight}>shell and Office scripts</span>, as well as <span className='glow' style={styles.highlight}>UiPath</span> and general automation. 
                     <br />
-                    In particular, this website consists of a <span style={styles.highlight}>Flask</span> back end with a PostgreSQL database and 
-                    a <span style={styles.highlight}>React</span> front end in the spirit of a modern-day SPA. 
+                    In particular, this website consists of a <span className='glow' style={styles.highlight}>Flask</span> back end with a PostgreSQL database and 
+                    a <span className='glow' style={styles.highlight}>React</span> front end in the spirit of a modern-day SPA. 
                     <br />
                     <span style={{ fontSize: '12px', color: 'grey' }}>
                         If you were to log in - guests can test the app with usersame: guest@fake.com, password: password123 - you would see how far along I am on my 
                         webapp hobby project in which I hope 
                         <br />
-                        to create an interactive building tool to follow along with the <a style={{ zIndex: 9999 }} href='https://www.nand2tetris.org/' target='_blank'><code>Nand2Tetris</code> course</a>.
+                        to create an interactive building tool to follow along with the <a style={{ zIndex: 9999, color: '#b596c5' }} href='https://www.nand2tetris.org/' target='_blank' rel='noopener noreferrer'><code>Nand2Tetris</code> course</a>.
                     </span>
                 </Typography>
                 <br />
@@ -244,7 +231,7 @@ const About = ({ history }) => {
                         onClick={chooseScrollFunc}
                         style={{ paddingLeft: 2, paddingRight: 5, minWidth: 40, zIndex: 99 }}
                     >
-                    Below</Button> you can see some of my accomplishments and experiences, most recently the <span style={styles.highlight}>agricultural robot</span> constructed and programmed for my two-person Master's project (TFM).
+                    Below</Button> you can see some of my accomplishments and experiences, most recently the <span className='glow' style={styles.highlight}>autonomous agricultural robot</span> constructed and programmed for my two-person Master's project.
                 </Typography>
             </div>
             <div className='tilesContainer'>

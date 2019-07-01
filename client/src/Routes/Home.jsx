@@ -1,32 +1,22 @@
-import React, { useState, Fragment, useEffect } from 'react';
-import { BrowserRouter as Router, Route, browserHistory, Switch, NavLink } from 'react-router-dom';
+import React from 'react';
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
 
-import AddIcon from '@material-ui/icons/AddCircle';
-import CloseIcon from '@material-ui/icons/Close';
-import HomeIcon from '@material-ui/icons/Home';
-
 import theme from '../theme'; 
-
-import ComponentsDrawer from './ComponentsDrawer'
 
 import Button from '@material-ui/core/Button'
 
 import CircularProgress from '@material-ui/core/CircularProgress'
-import Typography from '@material-ui/core/Typography'
+
+import Paper from '@material-ui/core/Paper'
 
 
 const Home = ({ history }) => {
 
    
-    const NavButton = ({ to, text }) => {
-        return <Button style={styles.headerButton} component={NavLink} to={to}>{text}</Button>;
-    }
+    // const NavButton = ({ to, text }) => {
+    //     return <Button style={styles.headerButton} component={NavLink} to={to}>{text}</Button>;
+    // }
 
 	
     const styles = {
@@ -51,6 +41,29 @@ const Home = ({ history }) => {
         headerTitle: {
             fontSize: 'calc(14px + 2vmin)',
             textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black',
+            // position: 'absolute',
+            // width: '100%',
+            // height: '100%',
+            // top: '0',
+            // left: '0'
+            // top: '150',
+            // left: '50%',
+        },
+        circle: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
+            width: '100%',
+            textAlign: 'center',
+            // margin: '10% 0',
+            // minHeight: '200px',
+            backgroundColor: theme.palette.primary.main,
+            position: 'relative',
+            fontSize: 'calc(14px + 2vmin)',
+            textShadow: '-1px 0 black, 0 1px black, 1px 0 black, 0 -1px black',
+            marginTop: '20px',
+            marginBottom: '65px',
         },
         headerSubtitle: {
             fontSize: 'calc(6px + 2vmin)',
@@ -58,32 +71,79 @@ const Home = ({ history }) => {
         headerButton: {
             color: theme.palette.primary.light,
         },
-        logo: {
-            animation: 'App-logo-spin infinite 20s linear',
-            height: '30vmin',
-            pointerEvents: 'none',
-            animationTextContent: '@keyframes App-logo-spin { from{transform: rotate(0deg);} to{transform: rotate(360deg);} }',
-            fill: theme.palette.primary.light,
+        levels: {
+            // borderStyle: 'solid',
+            // borderColor: theme.palette.primary.light,
+            // borderWidth: '1px',
+            // borderRadius: '1%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '30px',
+            width: '600px',
+            height: '300px',
+            marginBottom: '30px',
+            flexGrow: '1',
+        },
+        paper: {
+            padding: theme.spacing.unit,
+            textAlign: 'center',
+            color: theme.palette.text.secondary,
         },
     }
 
         
-    const logoStyle = {
-        ...styles.logo, 
-        animationPlayState: window.location.pathname === '/' ? 'running' : 'paused'
-	} 
+    // const logoStyle = {
+    //     ...styles.logo, 
+    //     animationPlayState: window.location.pathname === '/' ? 'running' : 'paused'
+	// } 
+
+    let level = 2
+    let totalLevels = 3
+    let percent = (level / totalLevels) * 100
+
+    function FormRow(props) {
+
+
+
+        return (
+          <React.Fragment>
+            <Grid item xs={4}>
+              <Paper style={styles.paper}>item</Paper>
+            </Grid>
+            <Grid item xs={4}>
+                <Paper style={styles.paper}>item</Paper>
+            </Grid>
+            <Grid item xs={4}>
+                <Paper style={styles.paper}>item</Paper>
+            </Grid>
+          </React.Fragment>
+        );
+      }
 
     return (
         <div style={styles.header}>
-            {/* <Logo style={logoStyle}/> */}
-            <p style={styles.headerTitle}>
-                You are at Level 1 
+            <p style={styles.circle} >
+                <CircularProgress style={{ position: 'absolute' }} size={140} variant='static' value={percent} thickness={1} color='secondary' />
+                Level <br />{level}
             </p>
-            <CircularProgress size={40} variant='static' value={20} thickness={8}/>
-            {/* <Progress /> */}
-            {/* <Typography style={{ fontSize: '20px' }}>1 / 23 </Typography> */}
+            <Paper style={styles.levels}>
+                <Grid container spacing={24}>
+                    <Grid container item xs={12} spacing={24}>
+                        <FormRow />
+                    </Grid>
+                    <Grid container item xs={12} spacing={24}>
+                        <FormRow />
+                    </Grid>
+                    <Grid container item xs={12} spacing={24}>
+                        <FormRow />
+                    </Grid>
+                </Grid>
+            </Paper>
+
+
             <p style={styles.headerSubtitle}>
-                Click <Button style={styles.headerButton} onClick={(evt) => history.push('/build')}>Build</Button> to advance to the next level
+                <Button style={styles.headerButton} onClick={(evt) => history.push('/build')}>Build</Button> to advance to the next level
             </p>
         </div>
     )

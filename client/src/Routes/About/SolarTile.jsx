@@ -17,6 +17,11 @@ const SolarTile = () => {
 			type: 'image',
 			src: 'solar/withMayor.jpg',
 			description: 'Municipal award for most solar installations with the Mayor of Washington, DC'
+        },
+        2: {
+			type: 'image',
+			src: 'solar/onRoof.jpg',
+			description: 'At one of our commercial-scale installations with some coworkers and crew members'
 		},
 	}
 

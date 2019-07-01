@@ -1,13 +1,19 @@
+npm run build
+
 Web > Code > Source code: /home/jplusplus/<repo>/server
 Don't have to change 'Working directory' or 'WSGI configuration file' (or Python version, I don't think)
 Don't think you have to change Virtualenv
 Don't have to change the wsgi config file
 
-Web > Static files > /home/jplusplus/<repo>/client (I think)
-
+Web > Static files: map at least the second URL to folder 
+	URL		Directory	
+	Empty		/home/jplusplus/N2TApp/client	 
+	/public		/home/jplusplus/N2TApp/client/build	 
+	
 Files > 
-	index.html: get rid of %PUBLIC_URL%/ before favicon
+	index.html: get rid of '%PUBLIC_URL%/' before favicon
 	home blueprint needs
-		templateFolder = 'N2TApp/client/public'
+		templateFolder = 'N2TApp/client/build'
 
-		staticFolder = 'N2TApp/client'  
+		staticFolder = 'N2TApp/client/build/static'	(not sure if this one is correct but seems to work)
+
