@@ -8,23 +8,27 @@ import Paper from '@material-ui/core/Paper'
 
 import Nand from '../../Gates/Nand'
 
+import Node from '../../Gates/Node'
+
 import Gates from './Gates'
+import Wires from './Wires'
 
 import './Build.css'
 
 import { getMousePosition } from './BuildFuncs'
 import { startDragBody, dragBody, endDragBody, rotateGate } from './BuildBodyFuncs'
-import { createFloatingTerminal, moveFloatingTerminal, connectFloatingTerminal } from './BuildTerminalFuncs'
+import { createFloatingTerminal, moveFloatingTerminal, connectFloatingTerminal, createWireNode, connectWireNode } from './BuildTerminalFuncs'
 
 const Build = ({ history }) => {
 
 	const [shift, setShift] = useState(0)
 	const [dragAreaVisible, setDragAreaVisible] = useState(false)
 	const [gates, setGates] = useState({})
-	// const [connectors, setConnectors] = useState({})
 	const [floatingTerminal, setFloatingTerminal] = useState()
+	const [wires, setWires] = useState({})
 
 	const gateTypes = {
+		'Node': Node,
 		'Nand': Nand
 	}
 
@@ -43,6 +47,7 @@ const Build = ({ history }) => {
 	
 
 	console.log('Build : gates = ', gates)
+	console.log('Build : wires = ', wires)
 
 
 	let percent = 0.44
@@ -110,17 +115,22 @@ const Build = ({ history }) => {
 
 		console.log('Build > handleMouseDown() : evt.target.id = ', evt.target.id)
 
-		if (evt.target.id.includes('Body'))
+		// if (evt.target.id.includes('Node'))
+		// 	console.log('Build > handleMouseDown() : mousedown on node')
+		if (evt.target.id.includes('Body') || evt.target.id.includes('Node'))
 			startDragBody(evt)
+		else if (evt.target.id.includes('_'))
+			createWireNode(evt, gates, setGates, gateTypes)
 		else if (evt.target.id.includes('In') || evt.target.id.includes('Out'))
-			createFloatingTerminal(evt, setFloatingTerminal)
+			createFloatingTerminal(evt, setFloatingTerminal, wires, setWires)
 	}
 
 	function handleMouseMove(evt) {
 
 		// console.log('Build > handleMouseMove() : evt.target.id = ', evt.target.id)
+		// console.log('Build > handleMouseMove() : evt.target.id.includes(Node) = ', evt.target.id.includes('Node'))
 
-		if (evt.target.id.includes('Body'))
+		if (evt.target.id.includes('Body') || evt.target.id.includes('Node'))
 			dragBody(evt)
 		else if (floatingTerminal)
 			moveFloatingTerminal(evt, floatingTerminal)
@@ -129,8 +139,11 @@ const Build = ({ history }) => {
 	function handleMouseUp(evt) {
 
 		console.log('Build > handleMouseUp() : evt.target.id = ', evt.target.id)
-
-		if (evt.target.id.includes('Body'))
+		console.log('Build > handleMouseUp() : evt.target.id.includes(Node) = ', evt.target.id.includes('Node'))
+		
+		if (evt.target.id.includes('NewNode'))
+			connectWireNode(evt, gates, setGates)
+		else if (evt.target.id.includes('Body') || evt.target.id.includes('Node'))
 			endDragBody()
 		else if (floatingTerminal)
 			connectFloatingTerminal(evt, floatingTerminal, setFloatingTerminal)
@@ -235,6 +248,9 @@ const Build = ({ history }) => {
 					<Gates 
 						gates={gates} 
 						style={styles.logo} 
+					/>
+					<Wires 
+						wires={wires} 
 					/>
 					{/* <polygon className="draggable confine" fill="#ffa500" points="16.9 15.6 17.4 18.2 15 17 12.6 18.2 13.1 15.6 11.2 13.8 13.8 13.4 15 11 16.2 13.4 18.8 13.8"/> */}
 				</svg>

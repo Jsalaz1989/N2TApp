@@ -1,3 +1,7 @@
+/*
+    Sources: http://www.petercollingridge.co.uk/tutorials/svg/interactive/dragging/
+*/
+
 import theme from '../../theme' 
 
 import { getRelativeXY, getMousePosition } from './BuildFuncs'
@@ -48,7 +52,7 @@ function followWithWires(id) {
     ins.forEach(lineIn => {
         let toTerminalId = lineIn.id.split('_')[1]
         let toTerminal = document.getElementById(toTerminalId)
-        // console.log('BuildBodyFuncs > followWithWires() > if ins : toTerminal =', toTerminal)
+        console.log('BuildBodyFuncs > followWithWires() > if ins : toTerminal =', toTerminal)
 
 
         const relativePoint = getRelativeXY(
@@ -65,7 +69,7 @@ function followWithWires(id) {
     outs.forEach(lineOut => {
         let fromTerminalId = lineOut.id.split('_')[0]
         let fromTerminal = document.getElementById(fromTerminalId)
-        // console.log('BuildBodyFuncs > followWithWires() > if outs : fromTerminal =', fromTerminal)
+        console.log('BuildBodyFuncs > followWithWires() > if outs : fromTerminal =', fromTerminal)
 
         const relativePoint = getRelativeXY(
             fromTerminal.x2.baseVal.value, 
@@ -81,13 +85,16 @@ function followWithWires(id) {
 
 export function startDragBody(evt) {
 
-    console.log('Build > startDragBody() : evt.target = ', evt.target)
+    console.log('BuildBodyFuncs > startDragBody() : evt.target = ', evt.target)
 
     if (!evt.target.classList.contains('draggable')) return
     
-    selectedElement = evt.target.parentElement;
+    if (evt.target.id.includes('Node'))
+        selectedElement = evt.target;
+    else
+        selectedElement = evt.target.parentElement;
 
-    console.log('Build > startDragBody() : selectedElement = ', selectedElement)
+    console.log('BuildBodyFuncs > startDragBody() : selectedElement = ', selectedElement)
 
     offset = getMousePosition(evt);
 
@@ -107,9 +114,9 @@ export function startDragBody(evt) {
     offset.y -= transform.matrix.f;
 
 
-    // console.log('Build > startDrag() : evt.target = ', evt.target)
+    // console.log('BuildBodyFuncs > startDrag() : evt.target = ', evt.target)
     confined = evt.target.classList.contains('confine');
-    // console.log('Build > startDrag() : confined = ', confined)
+    // console.log('BuildBodyFuncs > startDrag() : confined = ', confined)
 
     if (confined) {
         bbox = selectedElement.getBBox();
@@ -122,7 +129,7 @@ export function startDragBody(evt) {
 
 export function dragBody(evt) {
 
-    // console.log('Build > dragBody() : selectedElement = ', selectedElement)
+    // console.log('BuildBodyFuncs > dragBody() : selectedElement = ', selectedElement)
 
     if (!selectedElement) return
         
@@ -132,7 +139,7 @@ export function dragBody(evt) {
     var dx = coord.x - offset.x;
     var dy = coord.y - offset.y;
 
-    // console.log('Build > dragBody() : confined = ', confined)
+    // console.log('BuildBodyFuncs > dragBody() : confined = ', confined)
 
     if (confined) {
         if 			(dx < minX) dx = minX
@@ -141,8 +148,8 @@ export function dragBody(evt) {
         else if     (dy > maxY) dy = maxY
     }
 
-    // console.log('Build > dragBody() : (dx, dy) = (', dx, ', ', dy, ')')
-    // console.log('Build > dragBody() : transform = ', transform)
+    // console.log('BuildBodyFuncs > dragBody() : (dx, dy) = (', dx, ', ', dy, ')')
+    // console.log('BuildBodyFuncs > dragBody() : transform = ', transform)
 
 
     transform.setTranslate(dx, dy);
@@ -157,7 +164,7 @@ export function endDragBody() {
 export function rotateGate(evt) {
 
     const gateBodyId = evt.target.id
-    console.log('Build > handleDoubleClick() : gateBodyId = ', gateBodyId)
+    console.log('BuildBodyFuncs > handleDoubleClick() : gateBodyId = ', gateBodyId)
 
     if (!gateBodyId.includes('Body')) return
 
@@ -167,13 +174,13 @@ export function rotateGate(evt) {
     const gate = document.getElementById(gateId)
 
     const bbox = gate.getBBox()
-    console.log('Build > handleDoubleClick() : bbox = ', bbox)
+    console.log('BuildBodyFuncs > handleDoubleClick() : bbox = ', bbox)
 
     rotate.setRotate(90, bbox.width/2, bbox.height)
     gate.transform.baseVal.appendItem(rotate);
 
     const transformList = document.getElementById(gateId).transform.baseVal
-    console.log('Build > handleDoubleClick() : transformList = ', transformList)
+    console.log('BuildBodyFuncs > handleDoubleClick() : transformList = ', transformList)
 
     followWithWires(gateId)
 }

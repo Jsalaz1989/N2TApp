@@ -3,7 +3,7 @@
     // Render existing gates
 	const Gates = ({ gates, onDoubleClick, onMouseDown, onMouseUp, style }) => {
 
-        console.log('Build > Gates : gates = ', gates)
+        // console.log('Build > Gates : gates = ', gates)
         
 		// Generate gates array
 		let gatesArray = []
@@ -30,7 +30,7 @@
 			)
 		}
 
-		console.log('Build > Gates : gatesArray = ', gatesArray)
+		// console.log('Build > Gates : gatesArray = ', gatesArray)
 		if (gatesArray.length === 0) return null
 
 		return gatesArray
