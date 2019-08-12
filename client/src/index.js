@@ -6,12 +6,13 @@ import * as serviceWorker from './serviceWorker';
 
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import theme from './theme'; 
-// import CssBaseline from "@material-ui/core/CssBaseline";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
+// import App from './Routes/Build/DnD/App'
 
 ReactDOM.render(
     <MuiThemeProvider theme={theme}>
-        {/* <CssBaseline /> */}
+        <CssBaseline />
         <App />
     </MuiThemeProvider>, 
     document.getElementById('root')

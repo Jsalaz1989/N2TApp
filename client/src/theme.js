@@ -41,9 +41,10 @@ const theme = createMuiTheme({
             colorPrimary: {
                 backgroundColor: 'rgba(0, 0, 0, 0)',
                 position: 'static',
-                minHeight: '15vh',
+                // minHeight: 'auto',
                 boxShadow: 'none',
                 zIndex: 9999,
+                marginBottom: 13
             },
         },
         MuiDialog: {

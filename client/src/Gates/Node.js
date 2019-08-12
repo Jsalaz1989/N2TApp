@@ -1,43 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import './Nand.css'
+// import './Node.css'
 
-const WireNode = ({ style, pos={ top: 0, left: 0 }, id }) => {
+export default ({ id }) => {
 
-    // console.log('Nand : id = ', id, ' pos = ' + JSON.stringify(pos), ' rot = ' + rot)
-
-    const pathStyle  = {
-        fill: style.fill, 
-        fillOpacity: '0.75', 
-        fillRule: 'evenodd', 
-        stroke: '#000000', 
-        strokeWidth: '12', 
-        strokeLinecap: 'square', 
-        strokeLinejoin: 'miter', 
-        strokeOpacity: '1', 
-        strokeMiterlimit: '4', 
-        strokeDasharray: 'none'
-    }
-
-    const translation = 'translate(' + pos.left + ' ' + pos.top + ')'
-    // console.log('Nand : translation = ', translation)
+    const [terminalColor, setTerminalColor] = useState('black')
 
     return (
-        // <g 
-        //     id={id}
-        //     // width='10' height='10' 
-        //     stroke='black' strokeWidth='1' fill='black'
-        //     // style={{ transform: translation }} 
-        //     transform={translation}
-        // >
+        <g id={id}>
             <circle 
-                id={id} className="draggable confine"
-                cx='50' cy='50' r='4'
-                transform={translation}
-                // style={{ zIndex: 9999999 }}
-            />             
-        // </g>
-    )
+                id={id+'Body'} 
+                className="draggable confine"
+                cx='50' cy='50' r='5'
+                stroke='black'
+                fill='black'
+            />
+            <circle 
+                id={id+'Center'} 
+                // className="draggable confine"
+                cx='50' cy='50' r='2'
+                stroke={terminalColor}
+                fill={terminalColor}
+                onMouseOver={()=>setTerminalColor('purple')}
+                onMouseOut={()=>setTerminalColor('black')}
+            />
+        </g> 
+    )       
 }
-
-export default WireNode

@@ -123,10 +123,10 @@ const Home = ({ history }) => {
 
     return (
         <div style={styles.header}>
-            <p style={styles.circle} >
+            <div style={styles.circle} >
                 <CircularProgress style={{ position: 'absolute' }} size={140} variant='static' value={percent} thickness={1} color='secondary' />
                 Level <br />{level}
-            </p>
+            </div>
             <Paper style={styles.levels}>
                 <Grid container spacing={24}>
                     <Grid container item xs={12} spacing={24}>
