@@ -95,7 +95,7 @@ export default () => {
 				Drag components into the observer to view their details or drag them onto the canvas to use them 
 			</p>
 			<ComponentsDrawer setShift={setShift} />
-			<Paper style={styles.paper}>				
+			<Paper id='paper' style={styles.paper}>				
 				<DnDApp />
 			</Paper>
 		</div>

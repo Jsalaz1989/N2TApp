@@ -11,7 +11,7 @@ cd $PSScriptRoot
 
 If ($args[0]        -eq "client") 
 { 
-    client/npmRun 
+    If ($args[1]    -eq "run") { client/npmRun }
 }
 ElseIf ($args[0]    -eq "server") 
 {

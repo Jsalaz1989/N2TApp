@@ -18,12 +18,12 @@ const boxSource = {
         return { id, left, top, withDragPreview: true }
     },
     canDrag(props, monitor) {
-        console.log('Source > boxSource() : props.floatingTerminal = ', props.floatingTerminal)
-        return !props.floatingTerminal
+        console.log('Source > boxSource() : props.floatingWire = ', props.floatingWire)
+        return !props.floatingWire
     }
 }
 
-const Source = ({ hideSourceOnDrag, left, top, rotation, connectDragSource, isDragging, id, addWire, floatingTerminal }) => {
+const Source = ({ hideSourceOnDrag, left, top, rotation, connectDragSource, isDragging, id }) => {
     
     if (isDragging && hideSourceOnDrag) return
 
@@ -61,6 +61,9 @@ const Source = ({ hideSourceOnDrag, left, top, rotation, connectDragSource, isDr
         <g transform={`translate(${left} ${top}) rotate(${rotation})`}>
             <Gate id={id} />
         </g>
+        // <svg transform={`translate(${left} ${top}) rotate(${rotation})`}>
+        //     <Gate id={id} />
+        // </svg>
     )
 }
 

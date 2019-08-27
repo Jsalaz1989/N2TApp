@@ -40,14 +40,14 @@ const boxTarget = {
 
 let moveBox = () => null  // global variable to rewrite in Target but used in boxTarget
 
-const Target = ({ hideSourceOnDrag, connectDropTarget }) => {
+const Target = ({ hideSourceOnDrag, connectDropTarget, state, setState }) => {
 
-	const [state, setState] = useState({
-        gates: {}, 
-		wires: {}
-    })
+	// const [state, setState] = useState({
+    //     gates: {}, 
+	// 	wires: {}
+    // })
 
-    const [floatingTerminal, setFloatingTerminal] = useState(null)
+    const [floatingWire, setFloatingWire] = useState(null)
     const [mousePosition, setMousePosition] = useState(null)
     
     const [creatingNode, setCreatingNode] = useState(null)
@@ -72,7 +72,7 @@ const Target = ({ hideSourceOnDrag, connectDropTarget }) => {
 
     function recordMousePosition(evt) {
 
-        if (!floatingTerminal) return
+        if (!floatingWire) return
 
         const mousePos = getMousePosition(evt)
         // console.log('Target > recordMousePosition() : mousePos = ', mousePos)
@@ -99,8 +99,8 @@ const Target = ({ hideSourceOnDrag, connectDropTarget }) => {
             style={styles} 
             onDrop={evt=>addGate(evt, state, setState)} 
             onMouseMove={recordMousePosition}
-            onMouseDown={evt=>addWire(evt, state, setState, setFloatingTerminal)}
-            onMouseUp={evt=>connectWire(evt, state, setState, floatingTerminal, setFloatingTerminal)}                         
+            onMouseDown={evt=>addWire(evt, state, setState, setFloatingWire)}
+            onMouseUp={evt=>connectWire(evt, state, setState, floatingWire, setFloatingWire)}                         
             onDoubleClick={handleDoubleClick} 
         >
             {Object.keys(state.wires).map(id => {
@@ -110,7 +110,7 @@ const Target = ({ hideSourceOnDrag, connectDropTarget }) => {
                         key={id}
                         id={id}
                         stroke={
-                            (floatingTerminal && floatingTerminal.includes(id)) ||
+                            (floatingWire && floatingWire.includes(id)) ||
                             (creatingNode === id) 
                                 ? 'purple' 
                                 : 'black'
@@ -120,7 +120,7 @@ const Target = ({ hideSourceOnDrag, connectDropTarget }) => {
                         y1={from.y}
                         x2={to.x}
                         y2={to.y}
-                        style={{ pointerEvents: floatingTerminal ? 'none' : 'all' }}
+                        style={{ pointerEvents: floatingWire ? 'none' : 'all' }}
                         onMouseOver={()=>setCreatingNode(id)}
                         onMouseOut={()=>setCreatingNode(null)}
                     />
@@ -135,7 +135,7 @@ const Target = ({ hideSourceOnDrag, connectDropTarget }) => {
                         left={left}
                         top={top}
                         rotation={rotation}
-                        floatingTerminal={floatingTerminal} 
+                        floatingWire={floatingWire}
                         hideSourceOnDrag={hideSourceOnDrag}
                     />
                 )
