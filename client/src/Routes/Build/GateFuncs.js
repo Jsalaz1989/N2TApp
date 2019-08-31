@@ -15,6 +15,7 @@ export function addGate(evt, state, setState) {
     gateId = gateId.replace('new', '')
     console.log('GateFuncs > addGate() : gateId = ', gateId)
 
+    console.log('GateFuncs > addGate() : state.gates = ', state.gates)
     gateId = getNextName(gateId, state.gates)
     console.log('GateFuncs > addGate() : gateId = ', gateId)
 
@@ -32,14 +33,43 @@ export function addGate(evt, state, setState) {
     setState({ ...newState })
 }
 
-function getNextName(gateType, gates) {
-    let count = 0
-    for (let gate in gates) {
-        console.log('GateFuncs > getNextName() : gate = ', gate)
-        if (gate.includes(gateType)) count++
-    }
+// function getNextName(gateType, gates) {
+//     let count = 0
+//     for (let gate in gates) {
+//         console.log('GateFuncs > getNextName() : gate = ', gate)
+//         if (gate.includes(gateType)) count++
+//     }
     
-    return gateType + count.toString()
+//     return gateType + count.toString()
+// }
+
+function getNextName(gateType, gates) {
+
+    console.log('GateFuncs > getNextName() : gates = ', gates)
+
+    let highestNumber = -1
+    let currentNumber = -1
+    for (let gate in gates) {
+        if (gate.includes(gateType)) {
+            console.log('GateFuncs > getNextName() : gate = ', gate)
+            console.log('GateFuncs > getNextName() : gateType = ', gateType)
+
+            currentNumber = gate.replace(gateType, '')
+            console.log('GateFuncs > getNextName() : currentNumber = ', currentNumber)
+
+            currentNumber = Number(currentNumber)
+            console.log('GateFuncs > getNextName() : currentNumber = ', currentNumber)
+
+            console.log('GateFuncs > getNextName() : highestNumber = ', highestNumber)
+
+            if (currentNumber > highestNumber)
+                highestNumber = currentNumber
+        }
+    }
+
+    highestNumber++
+    
+    return gateType + highestNumber.toString()
 }
 
 export function addNode(evt, state, setState) {
@@ -88,9 +118,9 @@ export function addNode(evt, state, setState) {
     setState({ ...newState })
 }
    
-export function rotateGate(evt, state, setState) {
+export function rotateGate(id, state, setState) {
 
-    const gateId = evt.target.id.replace('Body', '')
+    const gateId = id.replace('Body', '')
     console.log('GateFuncs > rotateGate() : gateId = ', gateId)
 
     const newRotation = (state.gates[gateId].rotation + 90) % 360

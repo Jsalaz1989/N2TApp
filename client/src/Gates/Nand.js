@@ -65,6 +65,7 @@ export default ({ id }) => {
                 stroke={terminalColor[id+'Out']}
             />    
             <text 
+                id={id+'Text'}
                 strokeWidth='1'
                 x='30' y='54' 
                 // fontFamily='Roboto' 

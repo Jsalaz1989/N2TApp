@@ -91,12 +91,20 @@ const theme = createMuiTheme({
             root: {
                 color: '#b596c5',
             }
-        }
+        },
         // MuiDivider: {
         //     root: {
         //       marginTop: 1,
         //     },
         // },
+        MuiIconButton: {
+            root: {
+                padding: 0,
+            },            
+            // label: {
+            //     margin: 0,
+            // },
+        },
     },
 });
 

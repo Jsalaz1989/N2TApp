@@ -5,6 +5,7 @@ import Nand from '../../../Gates/Nand'
 import Node from '../../../Gates/Node'
 import { getTerminalPoint } from '../BuildFuncs'
 
+import snapToGrid from '../snapToGrid'
 
 
 const dragOpacity = 0.3
@@ -23,7 +24,7 @@ const defaultStyle = (item, currentOffset) => {
     // console.log('DragPreview > defaultStyle() : transform = ', transform)
     
     const rotation = transform.baseVal['1'].angle
-    console.log('DragPreview > defaultStyle() : rotation = ', rotation)
+    // console.log('DragPreview > defaultStyle() : rotation = ', rotation)
     
     let left, top
     if (!item.id.includes('Node')) {
@@ -71,6 +72,9 @@ const defaultStyle = (item, currentOffset) => {
         }
     }
 
+    // ;[left, top] = snapToGrid(left, top)
+
+
     return (
         {
             left: currentOffset.x+left,
@@ -78,8 +82,8 @@ const defaultStyle = (item, currentOffset) => {
             position: 'fixed',
             opacity: dragOpacity,
             transform: `rotate(${rotation}deg)`,
-            nonOffsetLeft: left,
-            nonOffsetTop: top,
+            // nonOffsetLeft: left,
+            // nonOffsetTop: top,
         }
     )
 }
@@ -99,15 +103,15 @@ const gateTypes = {
 }
 
 function getConnectedWires(gateId, wires) {
-    console.log('DragPreview > getConnectedWires() : gateId = ', gateId)
-    console.log('DragPreview > getConnectedWires() : wires = ', wires)
+    // console.log('DragPreview > getConnectedWires() : gateId = ', gateId)
+    // console.log('DragPreview > getConnectedWires() : wires = ', wires)
 
     const wireIds = Object.keys(wires)
-    console.log('DragPreview > getConnectedWires() : wireIds = ', wireIds)
+    // console.log('DragPreview > getConnectedWires() : wireIds = ', wireIds)
 
     let connectedWires = {}
     wireIds.forEach(wireId => {
-        console.log('DragPreview > getConnectedWires() : wireId = ', wireId)
+        // console.log('DragPreview > getConnectedWires() : wireId = ', wireId)
         
         if (wireId.includes(gateId)) {
             connectedWires[wireId] = {
@@ -117,46 +121,60 @@ function getConnectedWires(gateId, wires) {
         }
 
     })
-    console.log('DragPreview > getConnectedWires() : connectedWires = ', connectedWires)
+    // console.log('DragPreview > getConnectedWires() : connectedWires = ', connectedWires)
 
     return connectedWires
 }
 
 function moveConnectedWires(gateId, wires, currentOffset, item) {
-    console.log('DragPreview > moveConnectedWires() : gateId = ', gateId)
-    console.log('DragPreview > moveConnectedWires() : wires = ', wires)
+    // console.log('DragPreview > moveConnectedWires() : gateId = ', gateId)
+    // console.log('DragPreview > moveConnectedWires() : wires = ', wires)
 
     const wireIds = Object.keys(wires)
     let newWires = wires
     wireIds.forEach(wireId => {
 
-        console.log('DragPreview > moveConnectedWires() : wireId = ', wireId)
+        // console.log('DragPreview > moveConnectedWires() : wireId = ', wireId)
         
         const fromId = wireId.split('_')[0]
         const toId = wireId.split('_')[1]
-        console.log('DragPreview > moveConnectedWires() : fromId = ', fromId)
-        console.log('DragPreview > moveConnectedWires() : toId = ', toId)
+        // console.log('DragPreview > moveConnectedWires() : fromId = ', fromId)
+        // console.log('DragPreview > moveConnectedWires() : toId = ', toId)
 
         const from = document.getElementById(fromId)
         const to = document.getElementById(toId)
-        console.log('DragPreview > moveConnectedWires() : from = ', from)
-        console.log('DragPreview > moveConnectedWires() : to = ', to)
+        // console.log('DragPreview > moveConnectedWires() : from = ', from)
+        // console.log('DragPreview > moveConnectedWires() : to = ', to)
 
         const fromPoint = getTerminalPoint(from)
         const toPoint = getTerminalPoint(to)
-        console.log('DragPreview > moveConnectedWires() : fromPoint = ', fromPoint)
-        console.log('DragPreview > moveConnectedWires() : toPoint = ', toPoint)
+        // console.log('DragPreview > moveConnectedWires() : fromPoint = ', fromPoint)
+        // console.log('DragPreview > moveConnectedWires() : toPoint = ', toPoint)
 
         const bboxGate = document.getElementById(item.id).getBoundingClientRect()
-        console.log('DragPreview > moveConnectedWires() : bboxGate = ', bboxGate)
+        // console.log('DragPreview > moveConnectedWires() : bboxGate = ', bboxGate)
 
-        const dStyle = defaultStyle(item, currentOffset)
+        // const dStyle = defaultStyle(item, currentOffset)
         
-        newWires[wireId] = {
-            from: {x: fromPoint.x, y: fromPoint.y},
-            to: {x: toPoint.x+dStyle.left-bboxGate.x-dStyle.nonOffsetLeft, y: toPoint.y+dStyle.top-bboxGate.y-dStyle.nonOffsetTop} // for Nand rotation 0 +25, +bboxP.height/2, and -defaultStyle.nonOffsetTop work, compare with other gates and rotations
-        }     
+        // console.log('DragPreview > moveConnectedWires() : item.id = ', item.id)
+
+        const diff = {x: currentOffset.x-bboxGate.x, y: currentOffset.y-bboxGate.y}
+
+        if (fromId.includes(item.id)) {
+            newWires[wireId] = {
+                from: {x: fromPoint.x+diff.x, y: fromPoint.y+diff.y}, 
+                to: {x: toPoint.x, y: toPoint.y}
+            } 
+        }
+        else if (toId.includes(item.id)) {
+            newWires[wireId] = {
+                from: {x: fromPoint.x, y: fromPoint.y},
+                to: {x: toPoint.x+diff.x, y: toPoint.y+diff.y} 
+            } 
+        }
+            
     })
+
 
     return newWires
 }
@@ -164,7 +182,7 @@ function moveConnectedWires(gateId, wires, currentOffset, item) {
 
 const DragPreview = ({ isDragging, currentOffset, item, state }) => {
 
-    console.log('DragPreview : item = ', item)
+    // console.log('DragPreview : item = ', item)
 
     let Gate
     let connectedWires = {}
@@ -177,33 +195,33 @@ const DragPreview = ({ isDragging, currentOffset, item, state }) => {
         // Gate = document.getElementById(item.id)
 
         connectedWires = getConnectedWires(item.id, state.wires)
-        console.log('DragPreview > DragPreview() : connectedWires = ', connectedWires)
+        // console.log('DragPreview > DragPreview() : connectedWires = ', connectedWires)
     
-        console.log('DragPreview > DragPreview() : currentOffset = ', currentOffset)
+        // console.log('DragPreview > DragPreview() : currentOffset = ', currentOffset)
 
         draggedWires = moveConnectedWires(item.id, connectedWires, currentOffset, item) 
     }
 
     // console.log('DragPreview : dragState = ', dragState)
-    console.log('DragPreview : draggedWires = ', draggedWires)
+    // console.log('DragPreview : draggedWires = ', draggedWires)
 
     const bbox = document.getElementById('svg').getBoundingClientRect()
-    console.log('DragPreview > DragPreview() : bbox = ', bbox)
+    // console.log('DragPreview > DragPreview() : bbox = ', bbox)
 
     const svg = document.getElementById('svg')
     // console.log('DragPreview > DragPreview() : svg = ', svg)
     // console.log('DragPreview > DragPreview() : svg.style = ', svg.style.cssText)
 
-    function printPos() {
-        const dragSVG = document.getElementById('dragSVG')
-        console.log('dragSVG = ', dragSVG)
+    // function printPos() {
+    //     const dragSVG = document.getElementById('dragSVG')
+    //     // console.log('dragSVG = ', dragSVG)
 
-        const svgBbox = dragSVG.getBoundingClientRect()
-        console.log('svgBbox = ', svgBbox)
+    //     const svgBbox = dragSVG.getBoundingClientRect()
+    //     // console.log('svgBbox = ', svgBbox)
 
-    }
+    // }
 
-    isDragging && currentOffset && console.log('DragPreview > defaultStyle() = ', defaultStyle(item, currentOffset))
+    // isDragging && currentOffset && console.log('DragPreview > defaultStyle() = ', defaultStyle(item, currentOffset))
 
     return (
         !isDragging || !currentOffset || !item.withDragPreview ?

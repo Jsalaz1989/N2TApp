@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 
 // import './Node.css'
 
-export default ({ id }) => {
+export default ({ id, stroke, fill }) => {
 
-    const [terminalColor, setTerminalColor] = useState('black')
+    const [terminalColor, setTerminalColor] = useState(stroke)
 
     return (
         <g id={id}>
@@ -12,8 +12,8 @@ export default ({ id }) => {
                 id={id+'Body'} 
                 className="draggable confine"
                 cx='50' cy='50' r='5'
-                stroke='black'
-                fill='black'
+                stroke={stroke}
+                fill={fill}
             />
             <circle 
                 id={id+'Center'} 
