@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
 
 import LandingPage from './Routes/LandingPage'
 import LoginForm from './Routes/Auth/LoginForm'
@@ -29,7 +29,9 @@ import HomeIcon from '@material-ui/icons/Home'
 
 
 import Typography from '@material-ui/core/Typography'
-import theme from './theme';
+import { theme } from './theme'
+
+import { BuildContextProvider } from './Routes/Build/BuildContext'
 
 
 export default () => {
@@ -45,28 +47,28 @@ export default () => {
 
 		const AuthTabs1 = () => (
 			<Tabs value={window.location.pathname === tabValue && tabGroup1.includes(window.location.pathname) ? tabValue : false} onChange={(event, value) => setTabValue(value)}>
-				<Tab icon={<HomeIcon />} value='/home' label="Home" component={NavLink} to="/home" />
-				<Tab icon={<AddIcon />} value='/build' label="Build" component={NavLink} to="/build" />
+				<Tab icon={<HomeIcon />} value='/home' label="Home" component={Link} to="/home" />
+				<Tab icon={<AddIcon />} value='/build' label="Build" component={Link} to="/build" />
 			</Tabs>
 		)
 
 		const AuthTabs2 = () => (
 			<Tabs value={window.location.pathname === tabValue && tabGroup2.includes(window.location.pathname) ? tabValue : false} onChange={(event, value) => setTabValue(value)}>
-				<Tab icon={<HelpIcon />} value='/about' label="About Me" component={NavLink} to="/about" />
-				<Tab icon={<CloseIcon />} value='/logout' label="Log Out" component={NavLink} to="/logout" />
+				<Tab icon={<HelpIcon />} value='/about' label="About Me" component={Link} to="/about" />
+				<Tab icon={<CloseIcon />} value='/logout' label="Log Out" component={Link} to="/logout" />
 			</Tabs>
 		)
 		
 		const NoAuthTabs1 = () => (
 			<Tabs value={window.location.pathname === tabValue && tabGroup1.includes(window.location.pathname) ? tabValue : false} onChange={(event, value) => setTabValue(value)}>
-				<Tab icon={<HelpIcon />} value='/about' label="About Me" component={NavLink} to="/about" />
+				<Tab icon={<HelpIcon />} value='/about' label="About Me" component={Link} to="/about" />
 			</Tabs>
 		)
 
 		const NoAuthTabs2 = () => (
 			<Tabs value={window.location.pathname === tabValue && tabGroup2.includes(window.location.pathname) ? tabValue : false} onChange={(event, value) => setTabValue(value)}>
-				<Tab icon={<FingerprintIcon />} value='/login' label="Log In" component={NavLink} to="/login" />
-				<Tab icon={<HotTubIcon />} value='/register' label="Register" component={NavLink} to="/register" />
+				<Tab icon={<FingerprintIcon />} value='/login' label="Log In" component={Link} to="/login" />
+				<Tab icon={<HotTubIcon />} value='/register' label="Register" component={Link} to="/register" />
 			</Tabs>
 		)
 
@@ -99,7 +101,8 @@ export default () => {
 				{/* <Route path='/about' render={(props) => <Redirect {...props} to='https://cv.jsalaz1989.now.sh/' />} /> */}
 				<Route path='/about' component={() => {window.location.href = 'https://cv.jsalaz1989.now.sh/'; return null;}}/>
 				<PrivateRoute path='/home' component={Home} isAuthenticated={isAuthenticated} />
-				<PrivateRoute path='/build' component={Build} isAuthenticated={isAuthenticated}/>
+				{/* <PrivateRoute path='/build' component={Build} isAuthenticated={isAuthenticated}/> */}
+				<Route exact path='/build' render={(props) => <BuildContextProvider {...props}><Build {...props} /></BuildContextProvider>} />
 				<PrivateRoute path='/logout' component={LogoutForm} isAuthenticated={isAuthenticated}/>
 			</Switch>
 			<Typography color='textSecondary' align='center' className='foot' style={{ backgroundColor: theme.palette.primary.main }}>j++ &copy; 2019</Typography>

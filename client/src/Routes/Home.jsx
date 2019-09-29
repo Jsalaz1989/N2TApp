@@ -2,7 +2,7 @@ import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
 
-import theme from '../theme'; 
+import { theme } from '../theme' 
 
 import Button from '@material-ui/core/Button'
 
@@ -86,7 +86,7 @@ const Home = ({ history }) => {
             flexGrow: '1',
         },
         paper: {
-            padding: theme.spacing.unit,
+            padding: theme.spacing(1),
             textAlign: 'center',
             color: theme.palette.text.secondary,
         },
@@ -128,14 +128,14 @@ const Home = ({ history }) => {
                 Level <br />{level}
             </div>
             <Paper style={styles.levels}>
-                <Grid container spacing={24}>
-                    <Grid container item xs={12} spacing={24}>
+                <Grid container spacing={6}>
+                    <Grid container item xs={12} spacing={6}>
                         <FormRow />
                     </Grid>
-                    <Grid container item xs={12} spacing={24}>
+                    <Grid container item xs={12} spacing={6}>
                         <FormRow />
                     </Grid>
-                    <Grid container item xs={12} spacing={24}>
+                    <Grid container item xs={12} spacing={6}>
                         <FormRow />
                     </Grid>
                 </Grid>

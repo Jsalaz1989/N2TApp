@@ -9,7 +9,7 @@ import Memory from '@material-ui/icons/Memory';
 
 import Typography from '@material-ui/core/Typography'
 
-import theme from '../../theme'
+import { theme } from '../../theme'
 
 import Grid from '@material-ui/core/Grid';
 
@@ -19,6 +19,7 @@ import ChevronLeft from '@material-ui/icons/ChevronLeft'
 import Nand from '../../Gates/Nand'
 import { renderToStaticMarkup } from 'react-dom/server';
 
+import ItemTypes from './ItemTypes'
 
 const ComponentsDrawer = ({ setShift }) => {
 
@@ -135,11 +136,11 @@ const ComponentsDrawer = ({ setShift }) => {
 					<List style={{ marginTop: '40px' }}>
 						<ListItem button key='Nand Gate' onClick={() => setExpanded({zero: !expanded.zero})}>
 							<Typography style={{ position: 'relative', left: '8px', }}>0</Typography>
-							<ListItemText primary='Nand Gate' style={{ position: 'relative', left: '8px', }} />
+							<ListItemText primary='Nand Gate' style={{ position: 'relative', left: '23px', }} />
 						</ListItem>
 						{expanded.zero && 
 							<div style={{ backgroundColor: '#b596c5', overflowX: 'hidden' }}>
-								<ListItem id='newNand' button key='Nand' draggable onDragStart={(evt) => handleDragStart(evt)}>
+								<ListItem id={'new'+ItemTypes.NAND} button key={ItemTypes.NAND} draggable onDragStart={(evt) => handleDragStart(evt)}>
 									<ListItemText style={{ position: 'relative', left: '33px' }} secondary='Nand' id='nand' />				
 								</ListItem>
 								<ListItem button key='Nand2'>

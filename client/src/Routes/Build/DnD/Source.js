@@ -1,37 +1,51 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import ItemTypes from './ItemTypes'
+// import ItemTypes from './ItemTypes'
 import { DragSource } from 'react-dnd'
 
 import Nand from '../../../Gates/Nand'
 import Node from '../../../Gates/Node'
+import { theme } from '../../../theme'
 
+import ItemTypes from '../ItemTypes'
 
+//TODO: consider using general ItemTypes for this?
 const gateTypes = {
-    'Node': Node,
-    'Nand': Nand
+    [ItemTypes.CHIP_IN+ItemTypes.NODE]: Node,
+    [ItemTypes.CHIP_OUT+ItemTypes.NODE]: Node,
+    [ItemTypes.NODE]: Node,
+    [ItemTypes.NAND]: Nand
 }
 
+// Functions ran right before drag
 const boxSource = {
-    beginDrag({ id, left, top }, monitor, component) {
+
+    // Gather info on dragged item
+    beginDrag({ id, left, top, }, monitor, component) {
+        console.log('Source > boxSource > beginDrag() : id = ', id)
         return { id, left, top, withDragPreview: true }
     },
+
+    // Don't allow gate drag while dragging floatingWire
     canDrag(props, monitor) {
-        console.log('Source > boxSource() : props.floatingWire = ', props.floatingWire)
+        console.log('Source > boxSource > beginDrag() : props.floatingWire = ', props.floatingWire)
         return !props.floatingWire
     }
 }
 
+// General container for draggable gates/nodes
 const Source = ({ hideSourceOnDrag, left, top, rotation, connectDragSource, isDragging, id, selected=false }) => {
-    
+
+    console.log('Source : id = ', id)
+
     if (isDragging && hideSourceOnDrag) return
 
-    // console.log('Source : id = ', id)
+    // Ensure nodes are never rotated
+    if (id.includes(ItemTypes.NODE)) rotation = 0
 
-
-    if (id.includes('Node')) rotation = 0
-
+    // Adjust dragged gate position with respect to mouse cursor
+    //TODO: make values dynamic *maybe play around with transformOrigin more?)
     switch(rotation) {
         // case 0:
         //     left = left
@@ -55,55 +69,44 @@ const Source = ({ hideSourceOnDrag, left, top, rotation, connectDragSource, isDr
     const translation = `${left} ${top}`
     // console.log('Source : translation = ', translation)
 
-    // const transformOriginX = left + 50
-    // const transformOriginY = top + 25
-    // // const transformOrigin = `${transformOriginX}px ${transformOriginY}px`
-    // const transformOrigin = null
-
-    // console.log('Source : transformOrigin = ', transformOrigin)
-
-    const type = id.replace(/[0-9]/g, '')
-    // type = type.replace('Body', '')
-
+    const type = id.replace(/[0-9]/g, '')       // deduce gate type from id
     // console.log('Source : type = ', type)
 
-    const Gate = gateTypes[type]
+    //TODO: see if you can use general ItemTypes
+    const Gate = gateTypes[type]                // convert string to function
     // console.log('Source : Gate = ', Gate)
 
-    console.log('Source : selected = ', selected)
+    // console.log('Source : selected = ', selected)
 
+    // Svg tag needed only to define filter
     return connectDragSource(
-        // <g transform={`translate(${translation}) rotate(${rotation})`} style={{ transformOrigin: transformOrigin }}>
-        
-        // <g transform={`translate(${translation}) rotate(${rotation})`}>
-        //     <Gate id={id} />
-        // </g>
-
         <svg>
+            {console.log('Source: connectDragSource() : id = ', id)}
+            {/* Define glow effect */}
             <defs>
-                <filter id="f2" x="-20" y="0" width="100%" height="100%" filterUnits="userSpaceOnUse">
+                <filter id="glow" x="-20" y="0" width="100%" height="100%" filterUnits="userSpaceOnUse">
                     <feOffset result="offOut" in="SourceGraphic" dx="0" dy="0" />
                     <feGaussianBlur result="blurOut" in="offOut" stdDeviation="10" />
                     <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
                 </filter>
             </defs>
+
+            {/* Wrap gate with g tag to move it around and apply filter */}
             <g 
                 transform={`translate(${translation}) rotate(${rotation})`} 
-                filter={ selected ? "url(#f2)" : null}
+                filter={ selected ? "url(#glow)" : null}
             >
                 <Gate 
                     id={id} 
-                    stroke={ selected ? 'purple' : 'black' } 
-                    fill={ selected ? 'purple' : 'black' }
+                    stroke={ selected ? theme.palette.primary.light : 'black' } 
+                    fill={ selected ? theme.palette.primary.light : 'black' }
                 />
             </g>
         </svg>
-
-        // <svg style={{ transform: `translate(${translation}) rotate(${rotation})` }}>
-        //     <Gate id={id} />
-        // </svg>
     )
 }
+
+// The rest is all react-dnd mumbo-jumbo
 
 Source.propTypes= {
     connectDragSource: PropTypes.func.isRequired,
@@ -122,4 +125,5 @@ const connect = (connect, monitor) => (
     }
 )
 
+//TODO: see if it should really be ItemTypes.BOX, or maybe even something else?
 export default DragSource(ItemTypes.CSV, boxSource, connect)(Source)

@@ -4,7 +4,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
 	typography: {
-        useNextVariants: true,
+        // useNextVariants: true,
         // fontFamily: "'Segoe', sans-serif",
         fontFamily: 'Roboto',
 	},
@@ -98,14 +98,32 @@ const theme = createMuiTheme({
         //     },
         // },
         MuiIconButton: {
-            root: {
+            // root: {
+            //     padding: 0,
+            // },            
+            sizeSmall: {
                 padding: 0,
-            },            
-            // label: {
-            //     margin: 0,
-            // },
+            },
         },
     },
-});
+})
 
-export default theme
+//TODO: figure out which keys are never used
+const gateStyle = {
+    fill: theme.palette.primary.light, 
+    fillOpacity: '0.75', 
+    fillRule: 'evenodd', 
+    stroke: '#000000', 
+    gateStrokeWidth: '3',
+    textStrokeWidth: '1', 
+    textFontSize: '10', 
+    textFontWeight: '100',
+    strokeLinecap: 'square', 
+    strokeLinejoin: 'miter', 
+    strokeOpacity: '1', 
+    strokeMiterlimit: '4', 
+    strokeDasharray: 'none'
+}
+
+
+export { theme, gateStyle }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { DndProvider } from 'react-dnd'
 import MouseBackEnd from 'react-dnd-mouse-backend'
@@ -7,17 +7,11 @@ import DragPreview from './DragPreview'
 import Target from './Target'
 
 
-export default () => {
-
-    const [state, setState] = useState({
-        gates: {}, 
-		wires: {}
-    })
-
-    return (
-        <DndProvider backend={MouseBackEnd}>
-            <Target hideSourceOnDrag={false} state={state} setState={setState} />
-            <DragPreview state={state} setState={setState} />
-        </DndProvider>
-    )
-}
+export default ({ gates, setGates, wires, setWires, selectedElement, floatingWire, setFloatingWire }) => (
+    <DndProvider backend={MouseBackEnd}>
+        {/* <Target hideSourceOnDrag={false} gates={gates} setGates={setGates} wires={wires} setWires={setWires} selectedElement={selectedElement} floatingWire={floatingWire} setFloatingWire={setFloatingWire} /> */}
+        {/* <DragPreview wires={wires} /> */}
+        <Target hideSourceOnDrag={false} selectedElement={selectedElement} />
+        <DragPreview />
+    </DndProvider>
+)

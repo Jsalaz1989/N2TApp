@@ -1,96 +1,55 @@
 import update from 'immutability-helper'
-import { getMousePosition, getTerminalPoint } from './BuildFuncs'
+import { getMousePosition, getTerminalPoint } from './WireHelpers'
+import { getNextName, addNewChipTerminalNode } from './GateHelpers'
+import ItemTypes from './ItemTypes'
 
-import snapToGrid from './snapToGrid'
 
-export function addGate(evt, state, setState) {
+// Add a gate to dnd dropzone
+function addGate(evt, gateId, gates, setGates) {
 
-    evt.preventDefault()
-
-    let gateId = evt.dataTransfer.getData('text')
+    //TODO: consider getting gateId from evt.dataTransfer.getData('text')
+    gateId = gateId.replace('new', '')                                  // deduce gate to drop
     console.log('GateFuncs > addGate() : gateId = ', gateId)
 
-    if (!gateId.includes('new')) return 
-
-    gateId = gateId.replace('new', '')
+    console.log('GateFuncs > addGate() : gates = ', gates)
+    gateId = getNextName(gateId, gates)                           // find next number up for the given gate
     console.log('GateFuncs > addGate() : gateId = ', gateId)
 
-    console.log('GateFuncs > addGate() : state.gates = ', state.gates)
-    gateId = getNextName(gateId, state.gates)
-    console.log('GateFuncs > addGate() : gateId = ', gateId)
-
-    let newState = state
     const mousePos = getMousePosition(evt)
-    let top = mousePos.y - 100/2
-    let left = mousePos.x - 100/2
+    const top = mousePos.y - 100/2              //TODO: figure out why 100/2
+    const left = mousePos.x - 100/2
 
-    // ;[left, top] = snapToGrid(left, top)
+    let newGates = { ...gates }
+    newGates[gateId] = { top: top, left: left, rotation: 0 }      // add new gate with its info
 
-
-    newState.gates[gateId] = { top: top, left: left, rotation: 0 }
-
-    console.log('GateFuncs > addGate() : newState = ', newState)
-    setState({ ...newState })
+    console.log('GateFuncs > addGate() : newGates = ', newGates)
+    setGates(newGates)
 }
 
-// function getNextName(gateType, gates) {
-//     let count = 0
-//     for (let gate in gates) {
-//         console.log('GateFuncs > getNextName() : gate = ', gate)
-//         if (gate.includes(gateType)) count++
-//     }
-    
-//     return gateType + count.toString()
-// }
+function addNode(evt, gates, setGates, wires, setWires) {
 
-function getNextName(gateType, gates) {
-
-    console.log('GateFuncs > getNextName() : gates = ', gates)
-
-    let highestNumber = -1
-    let currentNumber = -1
-    for (let gate in gates) {
-        if (gate.includes(gateType)) {
-            console.log('GateFuncs > getNextName() : gate = ', gate)
-            console.log('GateFuncs > getNextName() : gateType = ', gateType)
-
-            currentNumber = gate.replace(gateType, '')
-            console.log('GateFuncs > getNextName() : currentNumber = ', currentNumber)
-
-            currentNumber = Number(currentNumber)
-            console.log('GateFuncs > getNextName() : currentNumber = ', currentNumber)
-
-            console.log('GateFuncs > getNextName() : highestNumber = ', highestNumber)
-
-            if (currentNumber > highestNumber)
-                highestNumber = currentNumber
-        }
-    }
-
-    highestNumber++
-    
-    return gateType + highestNumber.toString()
-}
-
-export function addNode(evt, state, setState) {
-
-    evt.preventDefault()
+    // evt.preventDefault()
 
     let wireId = evt.target.id
     console.log('GateFuncs > addNode() : wireId = ', wireId)
 
-    const id = getNextName('Node', state.gates)
+    const id = getNextName('Node', gates)
     console.log('GateFuncs > addNode() : id = ', id)
 
-    let newState = state
+    let newGates = { ...gates }
     const mousePos = getMousePosition(evt)
-    const top = mousePos.y - 100/2
-    const left = mousePos.x - 100/2
 
-    newState.gates[id] = { top: top, left: left, rotation: 0 }
+    newGates[id] = { 
+        left: mousePos.x - 100/2, //TODO: figure out why 100/2 (or 50)
+        top: mousePos.y - 100/2, 
+        rotation: 0 
+    }
 
-    const fromId = wireId.split('_')[0]
-    const toId = wireId.split('_')[1]
+    console.log('GateFuncs > addNode() : newGates = ', newGates)
+    setGates(newGates)
+
+    const fromId = wireId.split(ItemTypes.WIRE)[0]
+    const toId = wireId.split(ItemTypes.WIRE)[1]
     console.log('GateFuncs > addNode() : fromId = ', fromId)
     console.log('GateFuncs > addNode() : toId = ', toId)
 
@@ -102,37 +61,53 @@ export function addNode(evt, state, setState) {
     const fromPoint = getTerminalPoint(from)
     const toPoint = getTerminalPoint(to)
 
-    newState.wires[fromId + '_' + id+'Center'] = {
+    let newWires = { ...wires }
+
+    newWires[fromId + ItemTypes.WIRE + id + ItemTypes.NODE_CENTER] = {
         from: {x: fromPoint.x, y: fromPoint.y},
         to: {x: mousePos.x, y: mousePos.y}
     }
       
-    newState.wires[id+'Center_' + toId] = {
+    newWires[id + ItemTypes.NODE_CENTER + ItemTypes.WIRE + toId] = {
         from: {x: mousePos.x, y: mousePos.y},
         to: {x: toPoint.x, y: toPoint.y}
     }
 
-    delete newState.wires[wireId]
+    delete newWires[wireId]
 
-    console.log('GateFuncs > addNode() : newState = ', newState)
-    setState({ ...newState })
+    console.log('GateFuncs > addNode() : newWires = ', newWires)
+    setWires(newWires)
 }
    
-export function rotateGate(id, state, setState) {
+function rotateGate(id, gates, setGates) {
 
-    const gateId = id.replace('Body', '')
+    const gateId = id.replace('Body', '')   // deduce gate id from gate body
     console.log('GateFuncs > rotateGate() : gateId = ', gateId)
 
-    const newRotation = (state.gates[gateId].rotation + 90) % 360
+    const newRotation = (gates[gateId].rotation + 90) % 360     // rotate 90deg clockwise
     console.log('GateFuncs > rotateGate() : newRotation = ', newRotation)
 
-    setState(update(state, {
-        gates: {
-            [gateId]: {
-                $merge: {
-                    rotation: newRotation
-                }
+    // For the given gate, modify current rotation with new rotation
+    setGates(update(gates, {
+        [gateId]: {
+            $merge: {
+                rotation: newRotation
             }
         }
     }))
 }
+
+
+function addChipTerminalNode(inputs, outputs, gates, setGates) {
+    
+    let newGates = gates
+
+    const inputNodes = addNewChipTerminalNode(inputs)
+    const outputNodes = addNewChipTerminalNode(outputs)
+
+    newGates = { ...newGates, ...inputNodes, ...outputNodes }
+
+    setGates({ ...newGates })
+}
+
+export { addGate, rotateGate, addNode, addChipTerminalNode }
