@@ -18,17 +18,22 @@ def create_app(config_class=DevelopmentConfig):
     # Load Flask app    
     app = Flask(__name__, instance_path=abspath('.'), instance_relative_config=True)
 
-    # Import blueprints (NOTE: apparently has to happen before app.config)
-    from .blueprints.home import homeBlueprint
-    from .blueprints.auth import authBlueprint
 
-    # Load configuration
-    #print('config_class = ', abspath(config_class))
-    app.config.from_object(config_class)
+
     
     # Register the blueprints
-    app.register_blueprint(homeBlueprint)
-    app.register_blueprint(authBlueprint)
+    with app.app_context():
+       
+        # Load configuration
+        #print('config_class = ', abspath(config_class))
+        app.config.from_object(config_class)
+
+        # Import blueprints (NOTE: needs to be here after app.config)
+        from .blueprints.home import homeBlueprint
+        from .blueprints.auth import authBlueprint
+
+        app.register_blueprint(homeBlueprint)
+        app.register_blueprint(authBlueprint)
 
     # Catch-all chooses client routes (React) over server routes (Flask)
     @app.route('/', defaults={'path': ''})
