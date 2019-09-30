@@ -13,7 +13,7 @@ export const validateEmail = (value, userMustExist) => {
     const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
     return wait(0).then(async () => {
                 
-        await fetch('http://127.0.0.1:443/checkUserExists', {
+        await fetch('https://127.0.0.1:443/checkUserExists', {
             method: 'POST',
             headers: {'Content-Type':'application/json'},
             body: value,
