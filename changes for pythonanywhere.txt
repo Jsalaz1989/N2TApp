@@ -5,10 +5,7 @@ Don't have to change 'Working directory' or 'WSGI configuration file' (or Python
 Don't think you have to change Virtualenv
 Don't have to change the wsgi config file
 
-Web > Static files: map at least the second URL to folder 
-	URL		Directory	
-	Empty		/home/jplusplus/N2TApp/client	 
-	/public		/home/jplusplus/N2TApp/client/build	 
+Web > Static files: apparently need both
 	
 Files > 
 	index.html: get rid of '%PUBLIC_URL%/' before favicon
