@@ -3,7 +3,7 @@ import React from 'react'
 import { theme } from '../theme' 
 
 import Button from '@material-ui/core/Button'
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Logo from '../svgLogo';
 
 
@@ -48,7 +48,7 @@ const LandingPage = () => {
 	document.body.appendChild(createdStyleTag);
 
     const NavButton = ({ to, text }) => {
-        return <Button style={styles.headerButton} component={NavLink} to={to}>{text}</Button>;
+        return <Button style={styles.headerButton} component={Link} to={to}>{text}</Button>;
     }
 
     
@@ -62,7 +62,7 @@ const LandingPage = () => {
                 Please <NavButton to='/login' text='Log In'/> or <NavButton to='/register' text='Register'/> 
             </p>
             <p style={styles.headerAboutMe}>
-                And if you so choose, you may learn a little bit <NavButton to='/about' text='About Me'/>
+                You may also learn a little bit <NavButton to='/about' text='About N2T'/>
             </p>
         </header>
     )

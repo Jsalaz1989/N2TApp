@@ -178,7 +178,7 @@ const ComponentsDrawer = ({ setShift }) => {
 						<Memory style={{ color: 'white', display: 'inline' }} />
 					</Grid>
 					<Grid item>
-						<Typography style={{ transform: 'translate(7px,-3px)' }}>My Components</Typography> 
+						<Typography style={{ transform: 'translate(62px, 62px)' }}>My Components</Typography> 
 					</Grid>
 				</Grid>
 			</Button>

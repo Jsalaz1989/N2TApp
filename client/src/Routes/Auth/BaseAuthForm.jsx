@@ -65,7 +65,7 @@ const BaseAuthForm =  (props) => {
 		}
 
 		const GridContainerProps = {
-			spacing: 16,
+			spacing: 6,
 			alignItems: 'center',
 		}
 

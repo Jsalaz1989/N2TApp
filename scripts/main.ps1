@@ -11,8 +11,8 @@ cd $PSScriptRoot
 
 If ($args[0]        -eq "client") 
 { 
-    If ($args[1]    -eq "run") { client/npmRun }
-    If ($args[1]    -eq "build") { client/npmBuild }
+    If     ($args[1]    -eq "run")      { client/npmRun }
+    ElseIf ($args[1]    -eq "build")    { client/npmBuild }
 }
 ElseIf ($args[0]    -eq "server") 
 {
@@ -23,15 +23,15 @@ ElseIf ($args[0]    -eq "server")
 
         If ($args[1]        -eq "venv")
         {
-            If ($args[2]        -eq "activate") { server/venvActivate }
-            ElseIf ($args[2]    -eq "update") { server/venvUpdate }
-            ElseIf ($args[2]    -eq "freeze") { server/venvFreeze }
+            If     ($args[2]    -eq "activate")     { server/venvActivate }
+            ElseIf ($args[2]    -eq "update")       { server/venvUpdate }
+            ElseIf ($args[2]    -eq "freeze")       { server/venvFreeze }
         }
         ElseIf ($args[1]    -eq "db")
         {
-            If ($args[2]        -eq "create") { server/dbCreate }
-            ElseIf ($args[2]    -eq "migrate") { server/dbMigrate }
-            ElseIf ($args[2]    -eq "run") { server/dbRun }
+            If     ($args[2]    -eq "create")       { server/dbCreate }
+            ElseIf ($args[2]    -eq "migrate")      { server/dbMigrate }
+            ElseIf ($args[2]    -eq "run")          { server/dbRun }
         }
         ElseIf ($args[1]    -eq "flask") { server/flaskRun }
         ElseIf ($args[1]    -eq "run") 
